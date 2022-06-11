@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "discord.js": "^13.8.0",
+    "sqlite3": "^5.0.8"
+  },
+  "name": "botjsrewrite",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
