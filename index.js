@@ -2,9 +2,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Intents, Collection } = require('discord.js');
 const sqlite3 = require('sqlite3');
+const sqlite = require('sqlite');
 const { token } = require('./config.json');
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+  ], });
 
 // Creates client commands table and fills them with each command in ./commands
 client.commands = new Collection();
@@ -24,13 +29,9 @@ client.once('ready', () => {
     console.log('Logged on as: '+ client.user.username);
 })
 
-// Opens db connection
-const db = new sqlite3.Database('./data.db', sqlite3.OPEN_READWRITE, (err) => {
-    if (err)
-    {
-        console.log("Error at DB open is" + err);
-        exit(1);
-    }
+let db;
+sqlite.open({ filename: './data.db', driver: sqlite3.Database}).then((database) => {
+	db = database;
 })
 
 client.on('interactionCreate', async interaction => {
