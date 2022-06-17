@@ -6,13 +6,12 @@ module.exports = {
 		.setName('wallet')
 		.setDescription('Get the wallet of the selected user, or your own wallet.')
 		.addUserOption(option => option.setName('target').setDescription('The user\'s wallet to show')),
-	async execute(interaction, db) {
+	async execute(interaction, db, client) {
 		let user = interaction.options.getUser('target');
 		if (!user) user = interaction.user;
 
         // Gets the users owned cards from SQLite db
         const rowResult = await db.all(`SELECT Title, File_path, Date_Aquired FROM Items WHERE Owner_ID = ${user.id}`);
-
         // Makes array of every possible page to be shown
         const embedPages = [];
         if (rowResult.length > 0) {
@@ -28,6 +27,7 @@ module.exports = {
                 .setFooter({ text: `Made by Austin --- Card ${i+1}/${rowResult.length}`, iconURL: 'https://i.imgur.com/ARER89d.jpg'}));
             }
         }
+        // Default page if user does not have any cards
         else {
             embedPages.push(new MessageEmbed()
             .setColor('#800080')
