@@ -50,30 +50,30 @@ module.exports = {
 				if ((userTradeItem != null) && (targetTradeItem != null)) {
 
 					db.exec(`UPDATE Items
-					SET Owner_ID = "${interaction.user.id}", Date_Aquired = "${now.month()}-${now.date()}-${now.year()}"
+					SET Owner_ID = "${interaction.user.id}", Date_Aquired = "${now.month()+1}-${now.date()}-${now.year()}"
 					WHERE Title = "${targetTradeItem.Title}" AND Owner_ID = "${targetTradeItem.Owner_ID}";
 					
 					UPDATE Items
-					SET Owner_ID = "${targetUser.id}", Date_Aquired = "${now.month()}-${now.date()}-${now.year()}"
+					SET Owner_ID = "${targetUser.id}", Date_Aquired = "${now.month()+1}-${now.date()}-${now.year()}"
 					WHERE Title = "${userTradeItem.Title}" AND Owner_ID = "${userTradeItem.Owner_ID}";`);
 					return;
 				}
 				else if (userTradeItem == null) {
 					await db.exec(`UPDATE Items
-					SET Owner_ID = "${interaction.user.id}", Date_Aquired = "${now.month()}-${now.date()}-${now.year()}"
+					SET Owner_ID = "${interaction.user.id}", Date_Aquired = "${now.month()+1}-${now.date()}-${now.year()}"
 					WHERE Title = "${targetTradeItem.Title}" AND Owner_ID = "${targetTradeItem.Owner_ID}";`);
 					return;
 				}
 				else if (targetTradeItem == null) {
 					await db.exec(`UPDATE Items
-					SET Owner_ID = "${targetUser.id}", Date_Aquired = "${now.month()}-${now.date()}-${now.year()}"
+					SET Owner_ID = "${targetUser.id}", Date_Aquired = "${now.month()+1}-${now.date()}-${now.year()}"
 					WHERE Title = "${userTradeItem.Title}" AND Owner_ID = "${userTradeItem.Owner_ID}";`);
 					return;
 				}
 			}
 			else {
 				await targetUser.send('**Trade Declined**');
-				await interaction.user.send(`**${targetUser.username} declined the trade or did not respond!`);
+				await interaction.user.send(`**${targetUser.username} declined the trade or did not respond!**`);
 				return;
 			}
 		}
