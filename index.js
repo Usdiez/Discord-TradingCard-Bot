@@ -39,6 +39,8 @@ sqlite.open({ filename: './data.db', driver: sqlite3.Database}).then((database) 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
+	if (interaction.guild === null) return await interaction.user.send("Can not execute commands in DM");
+
 	const command = client.commands.get(interaction.commandName);
 
 	if (!command) return;
